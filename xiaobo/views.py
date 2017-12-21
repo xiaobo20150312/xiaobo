@@ -10,14 +10,18 @@ See the License for the specific language governing permissions and limitations 
 """
 
 from common.mymako import render_mako_context
-from blueking.component.shortcuts import get_client_by_request
 from func import get_app_list, get_job_list, get_server_list
 
 
 def home(request):
     username = request.user.username
-    app_list = get_app_list(username)
-    app_dict = {}
-    for app in app_list:
-        app_dict[app['ApplicationName']] = app['ApplicationID']
-    return render_mako_context(request, 'xiaobo/home.html', app_dict)
+    app_list = []
+    for app in get_app_list(username)['data']:
+        app_id = app['ApplicationID']
+        app_name = app['ApplicationName']
+        job_list = get_job_list(username,app_id)['data']
+        server_list= get_server_list(username,app_id)['data']
+        app_dict = {'app_name': app_name, 'app_id': app_id, 'job_list': job_list, 'server_list': server_list}
+        app_list.append(app_dict)
+    app_list_dict = {'data': app_list}
+    return render_mako_context(request, 'xiaobo/home.html', app_list_dict)
