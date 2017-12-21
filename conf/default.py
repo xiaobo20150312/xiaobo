@@ -115,7 +115,7 @@ INSTALLED_APPS = (
     # OTHER 3rd Party App
     'app_control',
     'account',
-    'home_application',
+    # 'home_application',
     'xiaobo',
 )
 

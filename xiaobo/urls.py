@@ -14,5 +14,5 @@ from django.conf.urls import url
 from xiaobo import views
 
 urlpatterns = [
-    url(r'^query/$', views.home),
+    url(r'^$', views.home),
 ]

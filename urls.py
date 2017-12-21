@@ -13,6 +13,7 @@ urls config
 from django.conf.urls import patterns, include, url
 # Uncomment the next two lines to enable the admin:
 from django.contrib import admin
+
 # admin.autodiscover()
 
 # 公共URL配置
@@ -25,9 +26,8 @@ urlpatterns = patterns(
     # 应用功能开关控制--请勿修改
     url(r'^app_control/', include('app_control.urls')),
     # 在home_application(根应用)里开始开发你的应用的主要功能
-    url(r'^xiaobo/',include('xiaobo.urls'))
+    url(r'^', include('xiaobo.urls'))
 )
-
 
 handler404 = 'error_pages.views.error_404'
 handler500 = 'error_pages.views.error_500'
