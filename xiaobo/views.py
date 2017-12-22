@@ -28,7 +28,7 @@ def do_job(request):
     ip = request.GET.get('host_ip')
     iplists = '1' + ':' + ip
     steps = [{'stepId': step_id, 'ipList': iplists}]
-    result_dict = execute_job(request, 3, 13, steps
+    result_dict = execute_job(request, 3, 13, steps)
     result_json = json.dumps(result_dict)
 
     return HttpResponse(result_json)
