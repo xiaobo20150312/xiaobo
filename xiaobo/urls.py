@@ -15,4 +15,5 @@ from xiaobo import views
 
 urlpatterns = [
     url(r'^$', views.home),
+    url(r'^do_job/$', views.do_job),
 ]

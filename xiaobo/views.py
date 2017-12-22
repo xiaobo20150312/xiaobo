@@ -10,18 +10,25 @@ See the License for the specific language governing permissions and limitations 
 """
 
 from common.mymako import render_mako_context
-from func import get_app_list, get_job_list, get_server_list
+from func import *
+from django.http import HttpResponse
+import json
 
 
 def home(request):
     username = request.user.username
-    app_list = []
-    for app in get_app_list(username)['data']:
-        app_id = app['ApplicationID']
-        app_name = app['ApplicationName']
-        job_list = get_job_list(username,app_id)['data']
-        server_list= get_server_list(username,app_id)['data']
-        app_dict = {'app_name': app_name, 'app_id': app_id, 'job_list': job_list, 'server_list': server_list}
-        app_list.append(app_dict)
-    app_list_dict = {'data': app_list}
-    return render_mako_context(request, 'xiaobo/home.html', app_list_dict)
+    app_id = request.GET.get('app_id', 3)
+    return_list = get_server_list(username, app_id)
+    return render_mako_context(request, 'xiaobo/home.html', return_list)
+
+
+def do_job(request):
+    username = request.user.username
+    step_id = get_step_id(username, 3, 13)
+    ip = request.GET.get('host_ip')
+    iplists = '1' + ':' + ip
+    steps = [{'stepId': step_id, 'ipList': iplists}]
+    result_dict = execute_job(request, 3, 13, steps
+    result_json = json.dumps(result_dict)
+
+    return HttpResponse(result_json)
